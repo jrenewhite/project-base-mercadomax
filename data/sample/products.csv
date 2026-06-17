@@ -1,0 +1,6 @@
+product_id,product_name,category,unit_price,active
+101,Laptop Nova 14,electronics,18999.00,true
+102,Mouse Orbit,electronics,399.00,true
+103,Desk Lamp Aura,home,799.00,true
+104,Notebook Pack,office,149.00,true
+105,USB-C Hub 6-in-1,electronics,999.00,true

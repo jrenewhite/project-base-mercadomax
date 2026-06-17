@@ -1,0 +1,62 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: mercadomax-postgres
+    environment:
+      POSTGRES_USER: developer
+      POSTGRES_PASSWORD: developer
+      POSTGRES_DB: advanced_databases
+    ports:
+      - "${LOCAL_PG_PORT:-5432}:5432"
+    volumes:
+      - mercadomax-postgres-data:/var/lib/postgresql/data
+      - ./schema/initial_schema.sql:/docker-entrypoint-initdb.d/01-initial-schema.sql:ro
+      - ./schema/seed.sql:/docker-entrypoint-initdb.d/02-seed.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U developer -d advanced_databases"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    networks:
+      default:
+        aliases:
+          - postgres
+
+  workspace:
+    build:
+      context: ./container
+      dockerfile: Dockerfile
+    container_name: mercadomax-workspace
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      PGPASSWORD: developer
+    ports:
+      - "${LOCAL_SSH_PORT:-2222}:22"
+    volumes:
+      - .:/workspace/session
+    working_dir: /workspace/session
+    networks:
+      default:
+        aliases:
+          - workspace
+
+  adminer:
+    image: adminer:4
+    container_name: mercadomax-adminer
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      ADMINER_DEFAULT_SERVER: postgres
+      ADMINER_DESIGN: pepa-linha-dark
+    ports:
+      - "${LOCAL_ADMINER_PORT:-8080}:8080"
+    networks:
+      default:
+        aliases:
+          - adminer
+
+volumes:
+  mercadomax-postgres-data:

@@ -1,0 +1,32 @@
+{
+  "name": "project-base-mercadomax",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "workspace",
+  "workspaceFolder": "/workspace/session",
+  "runServices": ["postgres", "workspace", "adminer"],
+  "shutdownAction": "stopCompose",
+  "overrideCommand": false,
+  "remoteUser": "developer",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "cweijan.vscode-postgresql-client2",
+        "mechatroner.rainbow-csv",
+        "ms-vscode.powershell",
+        "yzhang.markdown-all-in-one",
+        "ms-azuretools.vscode-docker"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "terminal.integrated.profiles.linux": {
+          "bash": {
+            "path": "bash"
+          },
+          "PowerShell": {
+            "path": "pwsh"
+          }
+        }
+      }
+    }
+  }
+}

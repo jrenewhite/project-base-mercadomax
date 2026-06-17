@@ -1,0 +1,4 @@
+customer_id,full_name,email,city,created_at
+1,Ana Lopez,ana.lopez@example.com,Monterrey,2026-05-02 09:00:00
+2,Bruno Diaz,bruno.diaz@example.com,Guadalajara,2026-05-04 12:00:00
+3,Carla Mena,carla.mena@example.com,Merida,2026-05-08 15:30:00

@@ -1,0 +1,5 @@
+order_id,customer_id,order_status,ordered_at,total_amount
+1001,1,pending,2026-06-09 10:15:00,19798.00
+1002,2,paid,2026-06-09 13:25:00,1148.00
+1003,1,completed,2026-06-10 09:40:00,798.00
+1004,3,cancelled,2026-06-10 16:20:00,999.00
