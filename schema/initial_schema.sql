@@ -29,6 +29,7 @@ CREATE TABLE orders (
   order_id INTEGER PRIMARY KEY,
   customer_id INTEGER NOT NULL REFERENCES customers(customer_id),
   order_status VARCHAR(30) NOT NULL CHECK (order_status IN ('pending', 'paid', 'completed', 'cancelled')),
+  cancel_reason VARCHAR(200),
   ordered_at TIMESTAMP NOT NULL,
   total_amount NUMERIC(10,2) NOT NULL CHECK (total_amount >= 0)
   -- TODO: considerar source_channel, delivery_type o branch_id si el alcance lo necesita.
@@ -54,9 +55,9 @@ CREATE TABLE payments (
 
 CREATE TABLE returns (
   return_id INTEGER PRIMARY KEY,
-  order_id INTEGER NOT NULL REFERENCES orders(order_id),
-  product_id INTEGER NOT NULL REFERENCES products(product_id),
+  order_item_id INTEGER NOT NULL REFERENCES order_items(order_item_id),
   returned_quantity INTEGER NOT NULL CHECK (returned_quantity > 0),
+  refunded_amount NUMERIC(10,2) NOT NULL CHECK (refunded_amount >= 0),
   return_reason VARCHAR(200),
   return_status VARCHAR(30) NOT NULL CHECK (return_status IN ('requested', 'approved', 'rejected')),
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
